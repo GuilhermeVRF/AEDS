@@ -44,13 +44,19 @@ public class LinkedList_Circular<G>{
         if(this.lista == null){
             this.inserirTopo(elementoAdicionar);
         }else{
-            Item<G> ponteiro = buscarChave(elementoAnterior);
+            Item<G> ponteiro = buscar(elementoAnterior);
             if(ponteiro != null){
-                ponteiro.proximoElemento= new Item(elementoAdicionar, ponteiro.proximoElemento);
+                if(ponteiro == this.fimLista){
+                    this.fimLista = new Item(elementoAdicionar, ponteiro.proximoElemento);
+                    ponteiro.proximoElemento = this.fimLista;
+                }else{
+                    ponteiro.proximoElemento = new Item(elementoAdicionar, ponteiro.proximoElemento);
+                }             
             }else{
                 this.inserirFinal(elementoAdicionar);
             }          
         }
+        this.size++;
     }
     
     public void inserirAntes(G elementoAdicionar, G elementoSucessor){
@@ -69,18 +75,58 @@ public class LinkedList_Circular<G>{
                 this.inserirFinal(elementoAdicionar);
             }
         }
+        this.size++;
     }
     
     public void removerTopo(){
         if(this.lista != null){
-            this.lista = this.lista.proximoElemento;
-            this.fimLista.proximoElemento = this.lista;
-            size--;
+            if(this.lista.proximoElemento == this.lista){
+                this.lista = null;
+                this.fimLista = null;
+            }else{
+                this.lista = this.lista.proximoElemento;
+                this.fimLista.proximoElemento = this.lista;
+            }
+            this.size--;
         }
     }
     
+    public void removerFinal(){
+        if(this.lista != null){      
+            if(this.lista.proximoElemento == this.lista){
+                this.lista = null;
+                this.fimLista = null;
+            }else{
+                Item<G> ponteiro = this.buscarAntecessor_Objeto(this.fimLista, this.lista);
+                ponteiro.proximoElemento = this.lista;
+                this.fimLista = ponteiro;
+            }           
+        }
+    }
     
-    public Item<G> buscarChave(G chave){
+    public void remover(G chave){
+        if(this.lista != null){
+            if(this.lista.proximoElemento == this.lista){
+                if(this.lista.elemento == chave){
+                    this.lista = null;
+                }          
+            }else{
+                Item<G> ponteiro = this.buscarAntecessor_chave(chave, this.lista);
+                if(ponteiro != null){
+                    if(ponteiro.proximoElemento == this.lista){
+                        ponteiro.proximoElemento = ponteiro.proximoElemento.proximoElemento;
+                        this.lista = ponteiro.proximoElemento;
+                    }else if (ponteiro.proximoElemento == this.fimLista){
+                        ponteiro.proximoElemento = ponteiro.proximoElemento.proximoElemento;
+                        this.fimLista = ponteiro;
+                    }else{
+                          ponteiro.proximoElemento = ponteiro.proximoElemento.proximoElemento;
+                    }                 
+                }
+            }
+        }    
+    }
+    public Item<G> buscar(G chave){
         if(this.lista == null){
             return null;
         }else{
@@ -127,6 +173,15 @@ public class LinkedList_Circular<G>{
         }
         return this.buscarAntecessor_chave(chave, ponteiro.proximoElemento);
     }
-    
+    //Esse método retorna o objeto antcessor a um informado pelo usuário.
+    private Item<G> buscarAntecessor_Objeto(Item<G> ponteiroSucessor, Item<G> ponteiro){
+        if(ponteiro.proximoElemento == ponteiroSucessor){
+            return ponteiro;
+        }
+        if(ponteiro.proximoElemento == this.lista){
+            return null;
+        }
+        return buscarAntecessor_Objeto(ponteiroSucessor, ponteiro.proximoElemento);
+    }
     
 }
