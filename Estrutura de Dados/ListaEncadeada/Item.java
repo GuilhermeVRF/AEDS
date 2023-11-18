@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Pilha;
+package ListaEncadeada;
 
 /**
  *
@@ -17,11 +17,16 @@ public class Item<T>{
         this.proximoItem = proximoItem;
     }
     
+    public Item(T elemento){
+        this.elemento = elemento;
+        this.proximoItem = null;
+    }
+    
     public void setElemento(T elemento){
         this.elemento = elemento;
     }
     
-    public void setProximoItem(Item<T> proximoItem){
+    protected void setProximoItem(Item<T> proximoItem){
         this.proximoItem = proximoItem;
     }
     
@@ -35,6 +40,6 @@ public class Item<T>{
     
     @Override
     public String toString(){
-        return "Elemento: "+ this.elemento;
+        return (String) elemento;
     }
 }
