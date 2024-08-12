@@ -54,7 +54,7 @@ public class BinaryTree<T extends Comparable<T>>{
     * Returns the first Node of the tree
     * return Node<T>
     */
-    public Node<T> getRoot(){
+    protected Node<T> getRoot(){
         return this.root;
     }
     
@@ -64,7 +64,6 @@ public class BinaryTree<T extends Comparable<T>>{
     * param Node<T> actualNode - The current node in the binary tree from the binary search
     */
     private void add(T content, Node<T> actualNode){
-        actualNode.setAccessNumber(actualNode.getAccessNumber() + 1);
         if(content.compareTo(actualNode.getContent()) == -1){
             if(actualNode.getLeftNode() == null){
                 actualNode.setLeftNode(new Node<>(content));
@@ -83,7 +82,6 @@ public class BinaryTree<T extends Comparable<T>>{
     private Node<T> remove(Node<T> actualNode, T target){
         if(actualNode == null) return actualNode;
         
-        actualNode.setAccessNumber(actualNode.getAccessNumber() + 1);
         if(actualNode.getContent().compareTo(target) == -1)
             actualNode.setLeftNode(this.remove(actualNode.getLeftNode(), target));
         else if(actualNode.getContent().compareTo(target) == 1)
@@ -103,15 +101,29 @@ public class BinaryTree<T extends Comparable<T>>{
         return null;
     }
     
+    /*
+    * Function for the user use to call the recursive min function
+    */
+    public T min(){
+        return this.min(this.root);
+    }
+    
+    /*
+    * Recursive function to return the smallest tree content
+    * param Node<T> actualNode - The current node in the tree
+    * return T - The smalleste content
+    */
     private T min(Node<T> actualNode){
         while(actualNode.getLeftNode() != null){
-            actualNode.setAccessNumber(actualNode.getAccessNumber() + 1);
             actualNode = actualNode.getLeftNode();
         }
         
         return actualNode.getContent();
     }
     
+    /*
+    * Interative function using Stack to print the BinaryTree in Pre Order
+    */
     public void stack_preOrder(){
         Stack<Node<T>> calls = new Stack<>();
         calls.push(this.root);
@@ -125,6 +137,9 @@ public class BinaryTree<T extends Comparable<T>>{
         }
     }
     
+    /*
+    * Interative function using Linked List to print the BinaryTree in Pre Order
+    */
     public void linkedList_preOrder(){
         List<Node<T>> calls = new LinkedList<>();
         calls.add(this.root);
@@ -143,8 +158,8 @@ public class BinaryTree<T extends Comparable<T>>{
     * param T content - The content to be searched in the tree
     * return boolean - true if it was found, false if not
     */
-    public boolean contains(T content){
-        return this.search(content, this.root) != null;
+    protected Node<T> searchNode(T content){
+        return this.search(content, this.root);
     }
     
     /*
@@ -158,7 +173,6 @@ public class BinaryTree<T extends Comparable<T>>{
             return null;
         }
         
-        actualNode.setAccessNumber(actualNode.getAccessNumber() + 1);
         if(content.compareTo(actualNode.getContent()) == 0){
             return actualNode;
         }else if(content.compareTo(actualNode.getContent()) > 0){

@@ -13,13 +13,11 @@ public class Node<T extends Comparable<T>>{
     private Node<T> leftNode;
     private T content;
     private Node<T> rigthNode;
-    private int accessNumber;
     
     public Node(T content){
         this.leftNode = null;
         this.content = content;
         this.rigthNode = null;
-        this.accessNumber = 0;
     }
     
     public void setLeftNode(Node<T> leftNode){
@@ -46,18 +44,8 @@ public class Node<T extends Comparable<T>>{
         this.content = content;
     }
     
-    public void setAccessNumber(int accessNumber){
-        this.accessNumber = accessNumber;
-    }
-    
-    public int getAccessNumber(){
-        return this.accessNumber;
-    }
-    
     @Override
     public String toString(){
-        return content.toString() + "\n"+
-                "Access number: "+ this.accessNumber;
+        return content.toString();
     }
-        
 }

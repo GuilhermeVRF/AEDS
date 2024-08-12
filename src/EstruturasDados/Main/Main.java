@@ -4,9 +4,8 @@
  */
 package EstruturasDados.Main;
 
-import EstruturasDados.Catalogo.Catalog;
-import EstruturasDados.Catalogo.Data;
-import java.util.Random;
+import EstruturasDados.BinaryTree.BinaryTree;
+import EstruturasDados.BinaryTree.BinaryTreeManipulator;
 
 /**
  *
@@ -18,16 +17,18 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Catalog catalog = new Catalog();
-        Random random = new Random();
+        BinaryTree<Integer> arvBin = new BinaryTree<>();
+        arvBin.add(10);
+        arvBin.add(8);
+        arvBin.add(15);
+        arvBin.add(12);
+        arvBin.add(16);
         
-        for(int i = 0; i < 10; i++){
-            catalog.add(new Data("Conteudo "+ i, random.nextInt(0, 20)));
-        }
+        BinaryTree<Integer> subTree = new BinaryTree<>();
+        subTree.add(15);
+        subTree.add(12);
+        subTree.add(16);
         
-        catalog.inOrder();
-        System.out.println("---------------");
-        catalog.removeAnteriorRegisters(10);
-        catalog.inOrder();
+        System.out.println(BinaryTreeManipulator.isSubTree(arvBin, subTree));
     }
  }
