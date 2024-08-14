@@ -10,26 +10,28 @@ package Algorithms;
  */
 public class BinarySearch {
     public static int search(int[] array, int target){
+        return search(array, target, 0);
+    }
+ 
+    private static int search(int[] array, int target, int count){
         int start = 0;
         int end = array.length - 1;
         int middle;
         
         while(start <= end){
             middle = (start + end)/2;
-            if(target == array[middle])
-                return middle;
+            if(target == array[middle]){
+                break;
+            }
             else if(target > array[middle])
                 start = middle + 1;
             else
                 end = middle - 1;
         }
         
-        return -1;
-    }
+        for(int i = start;i <= end;i++)
+            if(array[i] == target) count++;
         
-    
-    public static void main(String[] args){
-        int[] array = {1,2,3,4,5,6,7,8,9,10,11,12,13,14};
-        System.out.println(search(array, 19));
+        return count;
     }
 }
